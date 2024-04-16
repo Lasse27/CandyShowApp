@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.LineChart?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.control.Accordion?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane fx:id="mainBorderPane" maxHeight="1080.0" maxWidth="1920.0" minHeight="720.0" minWidth="1080.0" prefHeight="720.0" prefWidth="1080.0" scaleShape="false" style="-fx-background-color: grey;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.CandyApplication.MainController">
+    <top>
+        <MenuBar BorderPane.alignment="CENTER">
+            <menus>
+                <Menu mnemonicParsing="false" text="File">
+                    <items>
+                        <MenuItem mnemonicParsing="false" text="Close" />
+                    </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Edit">
+                    <items>
+                        <MenuItem mnemonicParsing="false" text="Delete" />
+                    </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Help">
+                    <items>
+                        <MenuItem mnemonicParsing="false" text="About" />
+                    </items>
+                </Menu>
+            </menus>
+        </MenuBar>
+    </top>
+    <center>
+        <Accordion fx:id="mainAccordion" BorderPane.alignment="CENTER">
+            <panes>
+                <TitledPane fx:id="overviewPage" animated="false" text="Start und Steuerung">
+                    <content>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="619.0" prefWidth="1104.0" style="-fx-background-color: e1e1e1;">
+                     <children>
+                        <Label layoutX="34.0" layoutY="14.0" prefHeight="38.0" prefWidth="902.0" text="Bitte einen Knopf wählen..." textAlignment="CENTER">
+                           <font>
+                              <Font name="System Bold" size="16.0" />
+                           </font>
+                        </Label>
+                        <Button fx:id="startAsyncButton" layoutX="35.0" layoutY="52.0" mnemonicParsing="false" onAction="#startAsyncButtonPressed" prefHeight="55.0" prefWidth="280.0" text="Start Async">
+                           <font>
+                              <Font name="System Bold" size="16.0" />
+                           </font>
+                        </Button>
+                        <Button fx:id="startSyncButton" layoutX="338.0" layoutY="52.0" mnemonicParsing="false" onAction="#startSyncButtonPressed" prefHeight="55.0" prefWidth="280.0" text="Start Sync">
+                           <font>
+                              <Font name="System Bold" size="16.0" />
+                           </font>
+                        </Button>
+                        <Label layoutX="35.0" layoutY="157.0" prefHeight="25.0" prefWidth="71.0" text="Logging" textAlignment="CENTER" underline="true" wrapText="true">
+                           <font>
+                              <Font name="System Bold" size="16.0" />
+                           </font>
+                        </Label>
+                        <TextArea fx:id="logWindow1" layoutX="35.0" layoutY="182.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="414.0" prefWidth="1014.0" />
+                        <Button fx:id="stopThreadsButton" layoutX="769.0" layoutY="52.0" mnemonicParsing="false" onAction="#stopThreadsButtonPressed" prefHeight="55.0" prefWidth="280.0" text="Stop all Threads">
+                           <font>
+                              <Font name="System Bold" size="16.0" />
+                           </font>
+                        </Button>
+                     </children>
+                        </AnchorPane>
+                    </content>
+                </TitledPane>
+                <TitledPane animated="false" text="Produktion und Verbrauch">
+                    <content>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: e1e1e1;">
+                            <children>
+                                <LineChart fx:id="producerChart" layoutX="6.0" layoutY="30.0" legendSide="TOP" prefHeight="379.0" prefWidth="510.0" title="Produzenten">
+                                    <xAxis>
+                                        <CategoryAxis label="Zeit t in Sekunden (s)" prefHeight="22.0" prefWidth="958.0" side="BOTTOM" />
+                                    </xAxis>
+                                    <yAxis>
+                                        <NumberAxis autoRanging="false" label="Produzierte Candy-Objekte" side="LEFT" />
+                                    </yAxis>
+                                </LineChart>
+                        <Label layoutX="70.0" layoutY="409.0" prefHeight="25.0" prefWidth="71.0" text="Logging" textAlignment="CENTER" underline="true" wrapText="true">
+                           <font>
+                              <Font name="System Bold" size="16.0" />
+                           </font>
+                        </Label>
+                        <TextArea fx:id="logWindow2" layoutX="69.0" layoutY="434.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="146.0" prefWidth="946.0" />
+                        <Label layoutX="70.0" layoutY="18.0" prefHeight="25.0" prefWidth="69.0" text="Graphen" textAlignment="CENTER" underline="true">
+                           <font>
+                              <Font name="System Bold" size="16.0" />
+                           </font>
+                        </Label>
+                        <LineChart fx:id="consumerChart" layoutX="516.0" layoutY="30.0" prefHeight="379.0" prefWidth="510.0" title="Konsumenten">
+                           <xAxis>
+                              <CategoryAxis label="Zeit t in Sekunden (s)" prefHeight="22.0" prefWidth="958.0" side="BOTTOM" />
+                           </xAxis>
+                           <yAxis>
+                              <NumberAxis autoRanging="false" label="Verbrauchte Candy-Objekte" side="LEFT" />
+                           </yAxis>
+                        </LineChart>
+                            </children>
+                        </AnchorPane>
+                    </content>
+                </TitledPane>
+                <TitledPane animated="false" prefHeight="492.0" prefWidth="814.0" text="Füllstand des Candy-Stacks">
+                    <content>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: e1e1e1;">
+                     <children>
+                        <LineChart fx:id="candyChart" layoutX="54.0" layoutY="83.0" title="Candy-Stack-Füllstand">
+                          <xAxis>
+                            <CategoryAxis label="Zeit in Sekunden" side="BOTTOM" />
+                          </xAxis>
+                          <yAxis>
+                            <NumberAxis label="Anzahl Candy-Objekte" side="LEFT" />
+                          </yAxis>
+                        </LineChart>
+                        <Label layoutX="54.0" layoutY="30.0" prefHeight="25.0" prefWidth="69.0" text="Graphen" textAlignment="CENTER" underline="true">
+                           <font>
+                              <Font name="System Bold" size="16.0" />
+                           </font>
+                        </Label>
+                     </children></AnchorPane>
+                    </content>
+                </TitledPane>
+            </panes>
+        </Accordion>
+    </center>
+</BorderPane>
