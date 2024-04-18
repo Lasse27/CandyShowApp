@@ -57,15 +57,15 @@ public class UIUpdater implements Runnable
 	private static void updateCandyChart ()
 	{
 		CANDY_VALUES = new XYChart.Series<>();
-		CANDY_CHART.getData().add(0, CANDY_VALUES);
+		CANDY_CHART.getData().addFirst(CANDY_VALUES);
 
 		EventHandler<ActionEvent> chartUpdater = event ->
 		{
-			//add a new point to the chart
+			// add a new point to the chart
 			CANDY_VALUES.getData().add(new XYChart.Data<>(String.valueOf(CANDY_POINTS++), CandyController.getCandyStack().size()));
 			if (CANDY_POINTS > 20)
 			{
-				CANDY_VALUES.getData().remove(0);
+				CANDY_VALUES.getData().removeFirst();
 			}
 		};
 		Timeline chartUpdate = new Timeline(new KeyFrame(Duration.seconds(1), chartUpdater));
