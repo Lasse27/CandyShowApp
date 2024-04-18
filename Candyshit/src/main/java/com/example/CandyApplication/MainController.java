@@ -1,8 +1,9 @@
 package com.example.CandyApplication;
 
+import com.example.CandyApplication.control.CandyController;
 import com.example.CandyApplication.control.ConsumerController;
 import com.example.CandyApplication.control.ProducerController;
-import com.example.CandyApplication.view.UIUpdater;
+import com.example.CandyApplication.view.CandyStackWatcher;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -58,8 +59,8 @@ public class MainController
 	void startAsyncButtonPressed (ActionEvent event)
 	{
 		// TODO: RESET vor Neustart
-		candyChart.getData().clear();
-		UIUpdater.resetValues();
+		this.candyChart.getData().clear();
+		CandyStackWatcher.resetValues();
 
 		// Buttons werden disabled, damit der Nutzer erkennt, dass der laufende Prozess begonnen hat.
 		startAsyncButton.setDisable(true);
@@ -68,7 +69,7 @@ public class MainController
 
 
 		// Start des UI Threads
-		Platform.runLater(new UIUpdater(consumerChart, candyChart, candyChart));
+		Platform.runLater(new CandyStackWatcher(candyChart, () -> CandyController.getCandyStack().size()));
 
 		// Instanziierung und Starten der Produzenten-Threads
 		ProducerController.startRandomProducerAmount(10,10);

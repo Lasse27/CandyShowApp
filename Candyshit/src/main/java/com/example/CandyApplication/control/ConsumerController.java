@@ -3,6 +3,8 @@ package com.example.CandyApplication.control;
 import com.example.CandyApplication.model.Consumer;
 import com.example.CandyApplication.utility.RandomStrings;
 
+import java.util.List;
+
 /**
  * Beschreibung
  *
@@ -12,11 +14,15 @@ import com.example.CandyApplication.utility.RandomStrings;
  */
 public class ConsumerController
 {
-	private static Consumer[] ACTIVE_CONSUMERS = null;
+	/** Die Instanz der Singleton-Klasse. */
+	public static ConsumerController instance = null;
+
+	/** Eine Sammlung der aktiven Konsumenten. */
+	private List<Consumer> activeConsumers = null;
 
 
 	/**
-	 * Privater Konstruktor, da die Klasse nicht instanziiert werden soll.
+	 * Privater Konstruktor, da die Klasse nicht von außerhalb über den Konstruktor instanziiert werden soll.
 	 */
 	private ConsumerController ()
 	{
@@ -24,48 +30,57 @@ public class ConsumerController
 
 
 	/**
-	 * Instanziiert eine zufällige Anzahl an Producer-Objekten innerhalb der angegebenen Limits und gibt dieses als Array zurück.
-	 *
-	 * @param minAmount Die Mindestanzahl der erzeugten Runnable-Objekte.
-	 * @param maxAmount Die Maximalanzahl der erzeugten Runnable-Objekte.
-	 *
-	 * @return Die erzeugten Runnable-Objekte in einem Array.
+	 * @return
 	 */
-	public static Consumer[] createRandomConsumerAmount (int minAmount, int maxAmount)
+	public static ConsumerController getInstance ()
 	{
-		// Erstellung eines zufälligen Integers innerhalb der Limits.
-		final int consumerAmount = (int) Math.floor(Math.random() * (maxAmount - minAmount + 1) + minAmount);
-		Consumer[] consumers = new Consumer[consumerAmount];
-
-
-		// Erstellung und Sammlung der benötigten Consumer
-		for (int i = 0; i < consumerAmount; i++)
+		if (instance == null)
 		{
-			consumers[i] = new Consumer(CandyController.getCandyStack(), RandomStrings.generateRandomString(20));
+			instance = new ConsumerController();
 		}
-
-		// Der erstellte Consumer-Array der Größe producerAmount wird zurückgegeben.
-		return consumers;
+		return instance;
 	}
 
 
 	/**
-	 * @param minAmount
-	 * @param maxAmount
+	 * Führt eine neue Consumer-Runnable auf einem neuen Thread aus.
+	 */
+	public void startConsumerThread ()
+	{
+		Consumer nextConsumer = new Consumer(CandyController.getCandyStack(), RandomStrings.generateRandomString(20));
+		this.activeConsumers.add(nextConsumer);
+		(new Thread(nextConsumer)).start();
+	}
+
+
+	/**
 	 *
 	 * @return
 	 */
-	public static Consumer[] startRandomConsumerAmount (int minAmount, int maxAmount)
+	public boolean stopConsumerThread ()
 	{
-		// Erstellt eine zufällige Anzahl an Producer-Objekten und speichert sie in der jeweiligen Klassenvariable
-		ACTIVE_CONSUMERS = ConsumerController.createRandomConsumerAmount(minAmount, maxAmount);
+		this.activeConsumers.getFirst().stopExecution();
+		this.activeConsumers.removeFirst();
+	}
 
-		for (Consumer consumer : ACTIVE_CONSUMERS)
+	/**
+	 * @param id
+	 *
+	 * @return
+	 */
+	public boolean stopConsumerThread (String id)
+	{
+		for (int i = 0; i < this.activeConsumers.size(); i++)
 		{
-			(new Thread(consumer)).start();
+			Consumer current = this.activeConsumers.get(i);
+			if (current.getID() == id)
+			{
+				this.activeConsumers.remove(i);
+				current.stopExecution();
+				return true;
+			}
 		}
-		System.out.println(ACTIVE_CONSUMERS.length + " Consumer-Threads wurden erstellt.");
-		return ACTIVE_CONSUMERS;
+		return false;
 	}
 
 
@@ -74,15 +89,15 @@ public class ConsumerController
 	 *
 	 * @return Die aktiven Konsumenten als Array.
 	 */
-	public static Consumer[] getActiveConsumers ()
+	public List<Consumer> getActiveConsumers ()
 	{
-		return ACTIVE_CONSUMERS;
+		return this.activeConsumers;
 	}
 
 
 	public static void stopAllActiveConsumers ()
 	{
-		for (Consumer activeConsumer : ACTIVE_CONSUMERS)
+		for (Consumer activeConsumer : this.activeConsumers)
 		{
 			activeConsumer.stopExecution();
 		}

@@ -15,7 +15,6 @@ public class ProducerController
 {
 	private static Producer[] ACTIVE_PRODUCERS = null;
 
-
 	/**
 	 * Privater Konstruktor, da die Klasse nicht instanziiert werden soll.
 	 */
