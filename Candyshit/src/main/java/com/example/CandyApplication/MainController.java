@@ -75,8 +75,7 @@ public class MainController
 		ProducerController.startRandomProducerAmount(10,10);
 
 		// Instanziierung und Starten der Konsumenten-Threads
-		ConsumerController.startRandomConsumerAmount(9,9
-		);
+		ConsumerController.startRandomConsumerAmount(9,9);
 
 
 	}
