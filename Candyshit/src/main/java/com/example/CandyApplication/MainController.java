@@ -59,7 +59,8 @@ public class MainController
 	void startAsyncButtonPressed (ActionEvent event)
 	{
 		// TODO: RESET vor Neustart
-		this.candyChart.getData().clear();
+		if (this.candyChart != null)
+			this.candyChart.getData().clear();
 		CandyStackWatcher.resetValues();
 
 		// Buttons werden disabled, damit der Nutzer erkennt, dass der laufende Prozess begonnen hat.
@@ -75,10 +76,20 @@ public class MainController
 		ProducerController.startRandomProducerAmount(10,10);
 
 		// Instanziierung und Starten der Konsumenten-Threads
-		ConsumerController.startRandomConsumerAmount(9,9);
+		startConsumers(10);
 
 
 	}
+
+
+	private static void startConsumers(int count)
+	{
+		for (int i = 0; i < count; i++)
+		{
+			ConsumerController.getInstance().startConsumer();
+		}
+	}
+
 
 
 	@FXML
@@ -100,7 +111,7 @@ public class MainController
 		ProducerController.stopAllActiveProducers();
 
 		// Stoppen aller Konsumenten-Threads
-		ConsumerController.stopAllActiveConsumers();
+		ConsumerController.getInstance().stopAllActiveConsumers();
 	}
 
 }

@@ -1,21 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.chart.CategoryAxis?>
-<?import javafx.scene.chart.LineChart?>
-<?import javafx.scene.chart.NumberAxis?>
-<?import javafx.scene.control.Accordion?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.Menu?>
-<?import javafx.scene.control.MenuBar?>
-<?import javafx.scene.control.MenuItem?>
-<?import javafx.scene.control.TextArea?>
-<?import javafx.scene.control.TitledPane?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.text.Font?>
+<?import javafx.scene.chart.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<BorderPane fx:id="mainBorderPane" maxHeight="1080.0" maxWidth="1920.0" minHeight="720.0" minWidth="1080.0" prefHeight="720.0" prefWidth="1080.0" scaleShape="false" style="-fx-background-color: grey;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.CandyApplication.MainController">
+<BorderPane fx:id="mainBorderPane" maxHeight="1080.0" maxWidth="1920.0" minHeight="720.0" minWidth="1080.0" prefHeight="720.0" prefWidth="1080.0" scaleShape="false" style="-fx-background-color: grey;" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.CandyApplication.MainController">
     <top>
         <MenuBar BorderPane.alignment="CENTER">
             <menus>
@@ -105,7 +95,7 @@
                     <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: e1e1e1;">
                      <children>
-                        <LineChart fx:id="chart" animated="false" createSymbols="false" layoutX="50.0" layoutY="25.0" legendVisible="false" prefHeight="375.0" prefWidth="985.0" title="Candy-Stack-Füllstand" AnchorPane.bottomAnchor="220.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="25.0">
+                        <LineChart fx:id="candyChart" animated="false" createSymbols="false" layoutX="50.0" layoutY="25.0" legendVisible="false" prefHeight="375.0" prefWidth="985.0" title="Candy-Stack-Füllstand" AnchorPane.bottomAnchor="220.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="25.0">
                           <xAxis>
                             <CategoryAxis label="Zeit in Sekunden" side="BOTTOM" />
                           </xAxis>
